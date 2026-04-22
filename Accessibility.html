@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Osman Melih Cabik — E-Learning & Accessibility Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e0e;
+    --surface: #161616;
+    --border: #2a2a2a;
+    --accent: #c8f03c;
+    --accent-dim: rgba(200,240,60,0.12);
+    --text: #f0f0f0;
+    --muted: #888;
+    --card-bg: #141414;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Instrument Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Original grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,240,60,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,240,60,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap {
+    max-width: 1100px; /* Increased width for better visibility */
+    margin: 0 auto;
+    padding: 0 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Enhanced Embed Container */
+  .embed-container {
+    position: relative;
+    padding-bottom: 65%; /* Increased height ratio */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    margin: 24px 0;
+    border-radius: 6px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  .embed-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  header {
+    padding: 80px 0 56px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header-tag::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 1.05;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .meta-value {
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .about {
+    padding: 64px 0;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .about-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 6px;
+  }
+
+  .about-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #ccc;
+  }
+
+  .about-text strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .skills {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .tag.highlight {
+    border-color: rgba(200,240,60,0.4);
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  .portfolio-header {
+    padding: 80px 0 48px;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px;
+    font-weight: 400;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    margin-bottom: 64px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 48px;
+    position: relative;
+    color: inherit;
+    display: block;
+  }
+
+  .card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: var(--accent);
+  }
+
+  .card p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  .context {
+    padding: 64px 0;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .context-blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .context-block {
+    padding: 28px;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    background: var(--surface);
+  }
+
+  .context-block h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--accent);
+  }
+
+  .context-block p {
+    font-size: 14px;
+    color: #bbb;
+    line-height: 1.65;
+  }
+
+  footer {
+    padding: 64px 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    margin-left: 32px;
+  }
+
+  @media (max-width: 800px) {
+    .about, .skills, .context { grid-template-columns: 1fr; gap: 24px; }
+    footer { flex-direction: column; gap: 24px; }
+    .header-meta { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="header-tag">Working Student Candidate — Video & E-Learning Developer</div>
+    <h1>Osman Melih Cabik<br><em>Software Accessibility</em><br>& Instructional Design</h1>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">M.Sc. Studies</span>
+        <span class="meta-value">Educational Technology — Universität des Saarlandes</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Current GPA</span>
+        <span class="meta-value">1.8 / 1.0</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Language Proficiency</span>
+        <span class="meta-value">English (C1) & German (B1)</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="about">
+    <div class="about-label">Vision</div>
+    <div class="about-text">
+      I bridge the gap between <strong>complex software requirements</strong> and <strong>engaging educational content</strong>. By combining my background in pedagogy with technical expertise in software architecture, I specialize in creating <strong>video-based animated e-learning</strong> that makes software accessibility (WCAG) intuitive for stakeholders and developers alike.
+    </div>
+  </div>
+
+  <div class="skills">
+    <div class="about-label">Technical Stack</div>
+    <div class="tag-list">
+      <span class="tag highlight">Figma Smart Animate</span>
+      <span class="tag highlight">Instructional Design</span>
+      <span class="tag highlight">Animated E-Learning</span>
+      <span class="tag highlight">WCAG 2.1 / BITV 2.0</span>
+      <span class="tag">Adobe Premiere Pro</span>
+      <span class="tag">Camtasia</span>
+      <span class="tag">Learning Analytics</span>
+      <span class="tag">Python</span>
+      <span class="tag">Flutter</span>
+      <span class="tag">Agile / Scrum</span>
+    </div>
+  </div>
+
+  <div class="portfolio-header">
+    <div class="section-label">Interactive Showcase</div>
+    <div class="section-title">E-Learning & Smart Animate Projects</div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Advanced E-Learning Prototype: Figma Smart Animate</h3>
+      <div class="embed-container">
+        <iframe src="https://osmanmelih-cabik-elearningcontent.figma.site/" allowfullscreen></iframe>
+      </div>
+      <p>This high-fidelity interactive module demonstrates software accessibility standards using <strong>Figma Smart Animate</strong>. It focuses on smooth transitions, realistic user flows, and interactive storytelling to explain complex WCAG requirements in an engaging, video-like format.</p>
+    </div>
+
+    <div class="card">
+      <h3>Interactive Museum of Personal Growth (Genially)</h3>
+      <div class="embed-container">
+        <iframe src="https://view.genially.com/695d45c871a2d1841c50ba80" allowfullscreen></iframe>
+      </div>
+      <p>A gamified e-learning experience showcasing my ability to translate learning objectives into interactive "bite-sized" modules. It emphasizes navigation, user engagement, and cognitive retention through immersive design.</p>
+    </div>
+  </div>
+
+  <div class="context">
+    <div class="about-label">Professional Path</div>
+    <div class="context-blocks">
+      <div class="context-block">
+        <h4>Technical Founder & Product Lead — Land of Chasers</h4>
+        <p>Led end-to-end product lifecycles, managing technical roadmaps and software architecture using C++, Python, and TypeScript. Engineered data-driven retention strategies that resulted in a <strong>30% increase in user engagement</strong> while managing investor relations with WePlay Ventures and SKALE.</p>
+      </div>
+      <div class="context-block">
+        <h4>Technical Product Owner — Google AI Academy</h4>
+        <p>Managed the complete Agile sprint lifecycle for <strong>EduCon</strong>, an EdTech platform built with Flutter. Bridged the gap between engineering teams and stakeholders to deliver a market-ready MVP focused on instructional effectiveness and user-centered design.</p>
+      </div>
+      <div class="context-block">
+        <h4>Co-Founder & Product — ESSA Virtual Classroom</h4>
+        <p>Scaled the virtual learning platform to <strong>1,000+ active users within a single month</strong>. Named EdTech Finalist at TEKNOFEST 2021, validating our innovative approach to remote education and gamified cognitive learning outcomes.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div style="font-family: 'DM Serif Display', serif; font-size: 20px;">Osman Melih Cabik</div>
+    <div class="footer-links">
+      <a href="mailto:osmanmelih.cabik@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/osmanmelihcabik/" target="_blank">LinkedIn</a>
+      <a href="https://github.com/osmnmelih" target="_blank">GitHub</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
